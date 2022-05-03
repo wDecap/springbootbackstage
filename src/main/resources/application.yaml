@@ -1,0 +1,18 @@
+server:
+  port: 8888
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=GMT%2b8
+    username: root
+    password:
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher springboot2.6版本以上加这个
+mybatis:
+  mapper-locations: classpath:mapper/*.xml #扫描所有的xml文件
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #控制台打印sql语句
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

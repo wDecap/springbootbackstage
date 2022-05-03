@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间  namespace-->
+<mapper namespace="com.atdecap.springbootbackstage.mapper.UserMapper">
+    <update id="update">
+        update user
+        <set>
+            <if test="username !=null">
+                username= #{username},
+            </if>
+<!--            <if test="password !=null">-->
+<!--                password= #{password}-->
+<!--            </if>-->
+            <if test="email !=null">
+               email= #{email},
+            </if>
+            <if test="telephone !=null">
+                telephone= #{telephone},
+            </if>
+            <if test="address !=null">
+                address= #{address},
+            </if>
+            <if test="integration !=null">
+                integration= #{integration}
+            </if>
+        </set>
+        <where>
+    id=#{id}
+        </where>
+    </update>
+</mapper>
