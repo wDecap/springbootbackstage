@@ -58,7 +58,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.5.2</version>
+            <version>3.5.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.velocity</groupId>
@@ -82,6 +82,17 @@
 <!--            <artifactId>springfox-swagger-ui</artifactId>-->
 <!--            <version>3.0.0</version>-->
 <!--        </dependency>-->
+        <!--hutool-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.7.20</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.1.2</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

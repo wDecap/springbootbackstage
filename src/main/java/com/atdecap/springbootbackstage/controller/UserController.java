@@ -1,127 +1,155 @@
 package com.atdecap.springbootbackstage.controller;
-
-import com.atdecap.springbootbackstage.entity.User;
-import com.atdecap.springbootbackstage.mapper.UserMapper;
-import com.atdecap.springbootbackstage.service.UserService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import javafx.util.Builder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
+import com.atdecap.springbootbackstage.service.IUserService;
+import com.atdecap.springbootbackstage.entity.User;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
+ * <p>
+ *  前端控制器
+ * </p>
+ *
  * @author Decap
- * @BelongsProject: IntelliJ IDEA
- * @BelongsPackage: com.atdecap.springbootbackstage.controller
- * @create 2022-04-2022/4/1823:00
- * @desc
- **/
+ * @since 2022-05-03
+ */
 @RestController
 @RequestMapping("/user")
 public class UserController {
-//    @Autowired
-//    @Resource
-//    private UserMapper userMapper;
-    @Autowired
-    private UserService userService;
 
-    //新增和修改
-    @PostMapping
-    public boolean saveUser(@RequestBody User user) {
-        return userService.saveUser(user);
-    }
+@Resource
+private IUserService userService;
 
-    //查询所用数据
-    @GetMapping("/")
-    public List<User> index() {
-//        List<User> users = userMapper.findUsers();
-//        return users;
-        return userService.list();
-    }
+// 新增或者更新
+@PostMapping
+public boolean save(@RequestBody User user) {
+        return userService.saveOrUpdate(user);
+        }
 
-    @DeleteMapping("/{id}")
-//    public Integer deleteUser(@PathVariable Integer id) {
-//        return userMapper.deleteById(id);  //mybatis的方法（UserMapper.java里的deleteById）
-    public boolean deleteUser(@PathVariable Integer id) {
-        return userService.removeById(id);    //用的是mybatis-plus的serviceimpl方法
-    }
-    //批量删除接口
-    @PostMapping("/del/batch")
+@DeleteMapping("/{id}")
+public Boolean delete(@PathVariable Integer id) {
+        return userService.removeById(id);
+        }
+
+@PostMapping("/del/batch")
 public boolean deleteBatch(@RequestBody List<Integer> ids) {
-   return userService.removeBatchByIds(ids);
-}
-    /**
-     * mybatis的方式
-     * @param pageNum
-     * @param pageSize
-     * @param integration
-     * @return
-     * 分页查询
-     * @RequestParam接收参数
-     * limit第一个参数 = (pageNum-1) * pageSize
-     */
+        return userService.removeByIds(ids);
+        }
 
-  /*  @GetMapping("/page") //接口路径： /user/page
-    public Map<String, Object> findPage(@RequestParam Integer pageNum,
-                                        @RequestParam Integer pageSize,
-                                        @RequestParam String integration
-    ) {
-        pageNum = (pageNum - 1) * pageSize;
+@GetMapping
+public List<User> findAll() {
+        return userService.list();
+        }
 
-*//*也可以用mysql全文检索，用mybaits写动态 ，觉得太繁琐不想用*//*
+@GetMapping("/{id}")
+public User findOne(@PathVariable Integer id) {
+        return userService.getById(id);
+        }
+
+@GetMapping("/page")
+public Page<User> findPage(@RequestParam Integer pageNum,
+                           @RequestParam Integer pageSize,
+                           @RequestParam(defaultValue = "") String integration) {
+        IPage<User> page = new Page<>(pageNum, pageSize);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         integration = integration.trim();//除去两头空格
         String[] s = integration.split(" "); //按照空格进行分割
         System.out.println(Arrays.toString(s)); //打印方便看拼接
         integration = "";//初始化
         for (String s1 : s) {
-            integration += "%" + s1 + "%";//拼接sql
+                integration += "%" + s1 + "%";//拼接sql
         }
-        System.out.println(integration);
-        List<User> data = userMapper.selectPage(pageNum, pageSize, integration);
-        Integer total = userMapper.selectPagetotal(integration);
-        HashMap<String, Object> res = new HashMap<>();
-        res.put("data", data);
-        res.put("total", total);
-        return res;
+        if (!"".equals("integration")) {
+                queryWrapper.like("integration",integration);
         }
-*/
-    /**
-     * mybatis-plus的方法
-     * @param pageNum
-     * @param pageSize
-     * @param integration
-     * @return
-     */
-//mybatis-plus整合搜索功能
-    @GetMapping("/page") //接口路径： /user/page
-    public IPage<User> findPage(@RequestParam Integer pageNum,
-                          @RequestParam Integer pageSize,
-                          @RequestParam(defaultValue="") String integration)
-     {
-         IPage<User> page = new Page<>(pageNum, pageSize);
-         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-         integration = integration.trim();//除去两头空格
-         String[] s = integration.split(" "); //按照空格进行分割
-         System.out.println(Arrays.toString(s)); //打印方便看拼接
-         integration = "";//初始化
-         for (String s1 : s) {
-             integration += "%" + s1 + "%";//拼接sql
-         }
-         if (!"".equals("integration")) {
-             queryWrapper.like("integration",integration);
-         }
-//         queryWrapper.orderByDesc("id");
-         /*小知识点
-         1.如果要加条件联合查询 like其实框架已经加了and  queryWrapper.like() 相当于 queryWrapper.and(w -> w.like())
-         2. queryWrapper.or().like()
+        return userService.page(new Page<>(pageNum, pageSize), queryWrapper);
+        }
+
+        /**
+         *
+         * 导出接口
+         * @param response
+         * @throws Exception
          */
-         return userService.page(page,queryWrapper);
-    }
+
+        @GetMapping("/export")
+        public void export(HttpServletResponse response) throws Exception {
+                // 从数据库查询出所有的数据
+                List<User> list = userService.list();
+                // 通过工具类创建writer 写出到磁盘路径
+//        ExcelWriter writer = ExcelUtil.getWriter(filesUploadPath + "/用户信息.xlsx");
+                // 在内存操作，写出到浏览器
+                ExcelWriter writer = ExcelUtil.getWriter(true);
+                //自定义EXCEL标题别名
+                writer.addHeaderAlias("username", "用户名");
+                writer.addHeaderAlias("password", "密码");
+                writer.addHeaderAlias("email", "邮箱");
+                writer.addHeaderAlias("phone", "电话");
+                writer.addHeaderAlias("address", "地址");
+                writer.addHeaderAlias("createTime", "创建时间");
+                writer.addHeaderAlias("avatarUrl", "头像");
+
+                // 一次性写出list内的对象到excel，使用默认样式，强制输出标题
+                writer.write(list, true);
+
+                // 设置浏览器响应的格式
+                response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
+                String fileName = URLEncoder.encode("用户信息", "UTF-8");
+                response.setHeader("Content-Disposition", "attachment;filename=" + fileName + ".xlsx");
+
+                ServletOutputStream out = response.getOutputStream();
+                writer.flush(out, true);
+                out.close();
+                writer.close();
+        }
+
+        /**
+         *
+         * @param file
+         * @throws Exception
+         */
+        @PostMapping("/import")
+        public boolean imp(MultipartFile file) throws Exception {
+                InputStream inputStream = file.getInputStream();
+                ExcelReader reader = ExcelUtil.getReader(inputStream);
+                // 方式1：(推荐) 通过 javabean的方式读取Excel内的对象，但是要求表头必须是英文，跟javabean的属性要对应起来
+//        List<User> list = reader.readAll(User.class);
+//                List<User> list =reader.read(0,1,User.class);
+//                System.out.println(list); //拿到的值都是null所以要用英文模板导出一下文件
+//                userService.saveBatch(list);
+
+                // 方式2：忽略表头的中文，直接读取表的内容
+                List<List<Object>> list = reader.read(1);
+                List<User> users = CollUtil.newArrayList();
+                for (List<Object> row : list) {
+                        User user = new User();
+                        user.setUsername(row.get(0).toString());
+                        user.setPassword(row.get(1).toString());
+                        user.setEmail(row.get(3).toString());
+                        user.setTelephone(row.get(4).toString());
+                        user.setAddress(row.get(5).toString());
+                        user.setAvatarUrl(row.get(6).toString());
+                        users.add(user);
+                }
+
+                userService.saveBatch(users);
+            return true;
+}
 }

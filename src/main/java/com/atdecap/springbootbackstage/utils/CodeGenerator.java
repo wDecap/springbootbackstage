@@ -14,8 +14,10 @@ import java.util.Collections;
  * @desc
  **/
 public class CodeGenerator {
-    public static void main(String[] args) {}
-        private void generate(){
+    public static void main(String[] args) {
+        generate();
+    }
+        private static void generate(){
             FastAutoGenerator.create("jdbc:mysql://localhost:3306/test?serverTimezone=GMT%2b8", "root", "")
                     .globalConfig(builder -> {
                         builder.author("Decap") // 设置作者
@@ -25,10 +27,14 @@ public class CodeGenerator {
                     })
                     .packageConfig(builder -> {
                         builder.parent("com.atdecap.springbootbackstage") // 设置父包名
-                                .moduleName("") // 设置父包模块名
-                                .pathInfo(Collections.singletonMap(OutputFile.mapper.xml, "D:\\IdeaProjects\\springbootbackstage\\src\\main\\resources\\mapper\\")); // 设置mapperXml生成路径
+                                .moduleName(null) // 设置父包模块名
+                                .pathInfo(Collections.singletonMap(OutputFile.mapperXml, "D:\\IdeaProjects\\springbootbackstage\\src\\main\\resources\\mapper\\")); // 设置mapperXml生成路径
                     })
                     .strategyConfig(builder -> {
+                        builder.entityBuilder().enableLombok();
+//                    builder.mapperBuilder().enableMapperAnnotation().build(); 在每个Mapper上加个@mapper注解 用Mapper扫描@MapperScan不用加
+                        builder.controllerBuilder().enableHyphenStyle()  // 开启驼峰转连字符
+                                .enableRestStyle();  // 开启生成@RestController 控制器
                         builder.addInclude("user") // 设置需要生成的表名
                                 .addTablePrefix("t_", "c_"); // 设置过滤表前缀
                     })
