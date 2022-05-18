@@ -72,7 +72,7 @@
                 <el-input v-model="form.email" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="电话">
-                <el-input v-model="form.phone" autocomplete="off"></el-input>
+                <el-input v-model="form.telephone" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="地址">
                 <el-input v-model="form.address" autocomplete="off"></el-input>
@@ -125,14 +125,14 @@
                 }).then(res => {
                     console.log(res)
 
-                    this.tableData = res.records
-                    this.total = res.total
+                    this.tableData = res.data.records
+                    this.total = res.data.total
 
                 })
             },
             save(){
                 this.request.post("/user/",this.form).then( res =>{
-                    if (res){
+                    if (res.data){
                         this.$message.success("保存成功")
                         this.dialogFormVisible = false
                         this.load()
@@ -152,7 +152,7 @@
             deleteBatch(){
                 let ids =  this.multipleSelection.map(v => v.id)// 因为后端的是List数组 而这ids是对象数组 所以要用前端的map(v => v.id)把对象数组 [{},{},{}] 转变成纯id的数组 [1,2,3,...]
                 this.request.post("/user/del/batch/",ids).then(res => {
-                    if(res){
+                    if(res.data){
                         this.$message.success("批量删除成功")
                         this.load()
                     }else {
@@ -166,7 +166,7 @@
             },
             handleDelete(id){
                 this.request.delete("/user/" + id).then(res => {
-                    if (res){
+                    if (res.data){
                         this.$message.success("删除成功")
                         this.load()
                     }else {

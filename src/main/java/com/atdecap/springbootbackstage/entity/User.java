@@ -30,7 +30,10 @@ public class User implements Serializable {
       @ApiModelProperty("密码")
       private String password;
 
-      @ApiModelProperty("邮箱")
+     @ApiModelProperty("昵称")
+     private String nickname;
+
+    @ApiModelProperty("邮箱")
       private String email;
 
       @ApiModelProperty("手机号")
@@ -72,7 +75,11 @@ public class User implements Serializable {
       public void setPassword(String password) {
           this.password = password;
       }
-    
+
+      public String getNickname(){return  nickname; }
+
+    public void setNickname(String nickname) {this.nickname = nickname;}
+
     public String getEmail() {
         return email;
     }
@@ -127,6 +134,7 @@ public class User implements Serializable {
               "id=" + id +
                   ", username=" + username +
                   ", password=" + password +
+                  ", nickname=" + nickname +
                   ", email=" + email +
                   ", telephone=" + telephone +
                   ", address=" + address +

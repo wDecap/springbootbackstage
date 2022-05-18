@@ -7,7 +7,7 @@
         <el-container>
 
             <el-header style=" border-bottom: 1px solid #ccc; ">
-               <Header :collapseBtnClass="collapseBtnClass" :collapse="isCollapse"/>
+               <Header :collapseBtnClass="collapseBtnClass" :asideCollapse="collapse"/>
             </el-header>
             <el-main>
 <!--当前页面的主路由会在router-view 里面显示-->
