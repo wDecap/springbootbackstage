@@ -28,9 +28,9 @@
 <script>
     export default {
         name: "Header",
-        props: {
+        props: { //接收Manage传过来的参数
             collapseBtnClass: String,
-            // collapse:Boolean
+            user: Object
 
         },
         computed: {
@@ -40,7 +40,7 @@
         },
         data() {
             return {
-                user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+
             }
         },
         methods: {

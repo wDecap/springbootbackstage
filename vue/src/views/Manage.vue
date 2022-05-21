@@ -7,11 +7,11 @@
         <el-container>
 
             <el-header style=" border-bottom: 1px solid #ccc; ">
-               <Header :collapseBtnClass="collapseBtnClass" :asideCollapse="collapse"/>
+               <Header :collapseBtnClass="collapseBtnClass" @asideCollapse="collapse" :user="user"/>
             </el-header>
             <el-main>
 <!--当前页面的主路由会在router-view 里面显示-->
-         <router-view />
+         <router-view @refreshUser="getUser" />
             </el-main>
 
         </el-container>
@@ -31,12 +31,16 @@ import Header from "@/components/Header";
                 isCollapse: false,
                 sideWidth: 200,
                 logoTextShow: true,
-                headerBg:'headerBg'
+                user: {},
 
             }
         },
+        created() {//调用后台方法
+            //从后台获取最新User数据
+            this.getUser()
+        },
 
-        components: {
+        components: {//引进组件
             Aside,
             Header
         },
@@ -52,6 +56,15 @@ import Header from "@/components/Header";
                     this.collapseBtnClass = 'el-icon-s-fold'
                     this.logoTextShow = true
                 }
+            },
+            getUser(){
+                // 先从浏览器缓存拿到username
+                let username = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).username : ""
+                //然后再从后台获取User用户数据
+                return  (this.request.get("/user/username/"+username)).then(res => {
+                    //重新赋值后台最新User数据
+                    this.user = res.data
+                })
             },
 
         }

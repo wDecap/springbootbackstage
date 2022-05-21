@@ -3,8 +3,17 @@
 </template>
 
 <script>
+    import * as echarts from  'echarts'
     export default {
-        name: ""
+        name: "Home",
+        data(){
+            return{
+
+            }
+        },
+        mounted() {
+
+        }
     }
 </script>
 
