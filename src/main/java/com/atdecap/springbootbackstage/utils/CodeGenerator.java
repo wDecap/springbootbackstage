@@ -27,14 +27,9 @@ public class CodeGenerator {
                     })
                     .packageConfig(builder -> {
                         builder.parent("com.atdecap.springbootbackstage") // 设置父包名
-<<<<<<< HEAD
-                                .moduleName("") // 设置父包模块名
-                                .pathInfo(Collections.singletonMap(OutputFile.mapper.xml, "D:\\IdeaProjects\\springbootbackstage\\src\\main\\resources\\mapper\\")); // 设置mapperXml生成路径
-
-=======
                                 .moduleName(null) // 设置父包模块名
                                 .pathInfo(Collections.singletonMap(OutputFile.mapperXml, "D:\\IdeaProjects\\springbootbackstage\\src\\main\\resources\\mapper\\")); // 设置mapperXml生成路径
->>>>>>> dev
+
                     })
                     .strategyConfig(builder -> {
                         builder.entityBuilder().enableLombok();
