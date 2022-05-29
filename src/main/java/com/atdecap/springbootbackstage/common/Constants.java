@@ -1,0 +1,20 @@
+package com.atdecap.springbootbackstage.common;
+
+/**
+ * @author Decap
+ * @BelongsProject: IntelliJ IDEA
+ * @BelongsPackage: com.atdecap.springbootbackstage.common
+ * @create 2022-05-2022/5/1214:38
+ * @desc
+ **/
+public interface Constants {
+    String CODE_200 ="200";//成功
+    String CODE_500 ="500";//系统错误
+    String CODE_401 ="401";//权限不足
+    String CODE_400 = "400"; //参数错误;
+    String CODE_600 = "600"; //其他业务错误;
+
+    String DICT_TYPE_ICON = "icon";
+
+    String FILES_KEY = "FILES_FRONT_ALL";
+}

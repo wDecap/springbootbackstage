@@ -11,6 +11,4 @@ public class SpringbootbackstageApplication {
         SpringApplication.run(SpringbootbackstageApplication.class, args);
     }
 
-
-
 }
