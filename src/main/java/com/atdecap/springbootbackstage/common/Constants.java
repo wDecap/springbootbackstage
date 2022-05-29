@@ -14,4 +14,7 @@ public interface Constants {
     String CODE_400 = "400"; //参数错误;
     String CODE_600 = "600"; //其他业务错误;
 
+    String DICT_TYPE_ICON = "icon";
+
+    String FILES_KEY = "FILES_FRONT_ALL";
 }

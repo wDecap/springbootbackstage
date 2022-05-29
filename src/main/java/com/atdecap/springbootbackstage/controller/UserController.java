@@ -100,26 +100,38 @@ public class UserController {
         return Result.success(userService.getOne(queryWrapper));
     }
 
-    @GetMapping("/page")
+//    @GetMapping("/page")
+//    public Result findPage(@RequestParam Integer pageNum,
+//                               @RequestParam Integer pageSize,
+//                               @RequestParam(defaultValue = "") String integration) {
+//        IPage<User> page = new Page<>(pageNum, pageSize);
+//        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+//        integration = integration.trim();//除去两头空格
+//        String[] s = integration.split(" "); //按照空格进行分割
+//        System.out.println(Arrays.toString(s)); //打印方便看拼接
+//        integration = "";//初始化
+//        for (String s1 : s) {
+//            integration += "%" + s1 + "%";//拼接sql
+//        }
+//        if (!"".equals("integration")) {
+//            queryWrapper.like("integration", integration);
+//        }
+//        TokenUtils.getCurrentUser();//调用静态方法 后台通过token获取用户信息
+//        return Result.success(userService.page(new Page<>(pageNum, pageSize), queryWrapper));
+//    }
+        @GetMapping("/page")
     public Result findPage(@RequestParam Integer pageNum,
                                @RequestParam Integer pageSize,
-                               @RequestParam(defaultValue = "") String integration) {
+                               @RequestParam(defaultValue = "") String username) {
         IPage<User> page = new Page<>(pageNum, pageSize);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        integration = integration.trim();//除去两头空格
-        String[] s = integration.split(" "); //按照空格进行分割
-        System.out.println(Arrays.toString(s)); //打印方便看拼接
-        integration = "";//初始化
-        for (String s1 : s) {
-            integration += "%" + s1 + "%";//拼接sql
+        if (!"".equals("username")) {
+            queryWrapper.like("username", username);
         }
-        if (!"".equals("integration")) {
-            queryWrapper.like("integration", integration);
-        }
+
         TokenUtils.getCurrentUser();//调用静态方法 后台通过token获取用户信息
         return Result.success(userService.page(new Page<>(pageNum, pageSize), queryWrapper));
     }
-
     /**
      * 导出接口
      *

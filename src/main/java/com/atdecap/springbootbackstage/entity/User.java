@@ -3,9 +3,13 @@ package com.atdecap.springbootbackstage.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+
 
 /**
  * <p>
@@ -27,6 +31,7 @@ public class User implements Serializable {
       @ApiModelProperty("用户名")
       private String username;
 
+
       @ApiModelProperty("密码")
       private String password;
 
@@ -43,13 +48,16 @@ public class User implements Serializable {
       private String address;
 
       @ApiModelProperty("创建时间")
-      private LocalDateTime createTime;
+      private Date createTime;
 
-      @ApiModelProperty("图片")
+      @ApiModelProperty("头像")
       private String avatarUrl;
 
       @ApiModelProperty("信息总和")
       private String integration;
+
+      @ApiModelProperty("角色")
+      private String role;
 
     
     public Integer getId() {
@@ -104,11 +112,11 @@ public class User implements Serializable {
           this.address = address;
       }
     
-    public LocalDateTime getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-      public void setCreateTime(LocalDateTime createTime) {
+      public void setCreateTime(Date createTime) {
           this.createTime = createTime;
       }
     
@@ -128,6 +136,14 @@ public class User implements Serializable {
           this.integration = integration;
       }
 
+      public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -141,6 +157,7 @@ public class User implements Serializable {
                   ", createTime=" + createTime +
                   ", avatarUrl=" + avatarUrl +
                   ", integration=" + integration +
+                  ", role=" + role +
               "}";
     }
 }

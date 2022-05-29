@@ -1,6 +1,9 @@
 package com.atdecap.springbootbackstage.controller.dto;
 
+import com.atdecap.springbootbackstage.entity.Menu;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @author Decap
@@ -16,4 +19,6 @@ public class UserDTO {
     private String avatarUrl;
     private String nickname;
     private String token;
+    private String role;
+    private List<Menu> menus;
 }
