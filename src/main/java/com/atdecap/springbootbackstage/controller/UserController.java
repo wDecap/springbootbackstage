@@ -8,6 +8,7 @@ import cn.hutool.poi.excel.ExcelWriter;
 import com.atdecap.springbootbackstage.common.Constants;
 import com.atdecap.springbootbackstage.common.Result;
 import com.atdecap.springbootbackstage.controller.dto.UserDTO;
+import com.atdecap.springbootbackstage.controller.dto.UserPasswordDTO;
 import com.atdecap.springbootbackstage.utils.TokenUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -66,7 +67,16 @@ public class UserController {
         }
         return Result.success(userService.register(userDTO));
     }
-
+    /**
+     * 修改密码
+     * @param userPasswordDTO
+     * @return
+     */
+    @PostMapping("/password")
+    public Result password(@RequestBody UserPasswordDTO userPasswordDTO) {
+        userService.updatePassword(userPasswordDTO);
+        return Result.success();
+    }
     // 新增或者更新
     @PostMapping
     public Result save(@RequestBody User user) {
@@ -86,6 +96,14 @@ public class UserController {
     @GetMapping
     public Result findAll() {
         return Result.success(userService.list());
+    }
+
+    @GetMapping("/role/{role}")
+    public Result findUsersByRole(@PathVariable String role) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("role", role);
+        List<User> list = userService.list(queryWrapper);
+        return Result.success(list);
     }
 
     @GetMapping("/{id}")
@@ -123,14 +141,18 @@ public class UserController {
     public Result findPage(@RequestParam Integer pageNum,
                                @RequestParam Integer pageSize,
                                @RequestParam(defaultValue = "") String username) {
-        IPage<User> page = new Page<>(pageNum, pageSize);
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        if (!"".equals("username")) {
-            queryWrapper.like("username", username);
-        }
+//        IPage<User> page = new Page<>(pageNum, pageSize);
+//        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+//        if (!"".equals("username")) {
+//            queryWrapper.like("username", username);
+//        }
+//
+//        TokenUtils.getCurrentUser();//调用静态方法 后台通过token获取用户信息
+//        return Result.success(userService.page(new Page<>(pageNum, pageSize), queryWrapper));
 
-        TokenUtils.getCurrentUser();//调用静态方法 后台通过token获取用户信息
-        return Result.success(userService.page(new Page<>(pageNum, pageSize), queryWrapper));
+//, email, address
+      return Result.success(userService.findPage(new Page<>(pageNum, pageSize), username));
+
     }
     /**
      * 导出接口

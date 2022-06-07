@@ -39,6 +39,8 @@
 </template>
 
 <script>
+    import {setRoutes} from "@/router";
+
     export default {
         name: "Login",
         data() {
@@ -63,6 +65,10 @@
                         this.request.post("/user/login", this.user,).then(res => {
                             if(res.code == '200') {
                                 localStorage.setItem("user",JSON.stringify(res.data)) //存储用户信息到浏览器
+                                localStorage.setItem("menus",JSON.stringify(res.data.menus))//存储菜单列表信息到浏览器
+
+                                //动态设置当前用户的路由
+                                setRoutes()
                                 this.$router.push("/")
                                 this.$message.success("登入成功")
                             } else {
@@ -262,12 +268,12 @@
   }
   @font-face {
     font-family: "iconfont"; /* Project id 3387991 */
-    src: url('./font/iconfont.eot?t=1652091954316'); /* IE9 */
-    src: url('./font/iconfont.eot?t=1652091954316#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('./font/iconfont.woff2?t=1652091954316') format('woff2'),
-    url('./font/iconfont.woff?t=1652091954316') format('woff'),
-    url('./font/iconfont.ttf?t=1652091954316') format('truetype'),
-    url('./font/iconfont.svg?t=1652091954316#iconfont') format('svg');
+    src: url('font/iconfont.eot?t=1652091954316'); /* IE9 */
+    src: url('font/iconfont.eot?t=1652091954316#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('font/iconfont.woff2?t=1652091954316') format('woff2'),
+    url('font/iconfont.woff?t=1652091954316') format('woff'),
+    url('font/iconfont.ttf?t=1652091954316') format('truetype'),
+    url('font/iconfont.svg?t=1652091954316#iconfont') format('svg');
   }
 
   .iconfont {

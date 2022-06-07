@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.log.Log;
 import com.atdecap.springbootbackstage.common.Constants;
 import com.atdecap.springbootbackstage.controller.dto.UserDTO;
+import com.atdecap.springbootbackstage.controller.dto.UserPasswordDTO;
 import com.atdecap.springbootbackstage.entity.Menu;
 import com.atdecap.springbootbackstage.entity.RoleMenu;
 import com.atdecap.springbootbackstage.entity.User;
@@ -15,6 +16,7 @@ import com.atdecap.springbootbackstage.service.IMenuService;
 import com.atdecap.springbootbackstage.service.IUserService;
 import com.atdecap.springbootbackstage.utils.TokenUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,9 @@ import java.util.logging.Logger;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
     private static final Log LOG = Log.get();
+
+    @Resource
+    private UserMapper userMapper;
 
     @Resource
     private RoleMapper roleMapper;
@@ -77,6 +82,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return one;
     }
 
+    @Override
+    public void updatePassword(UserPasswordDTO userPasswordDTO) {
+
+    }
+
+    @Override
+    //, String email, String address
+    public Page<User> findPage(Page<User> page, String username) {
+        return userMapper.findPage(page, username);
+    }
+
+
     private User getUserInfo(UserDTO userDTO) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", userDTO.getUsername());
@@ -113,17 +130,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         //查出系统的所有菜单
         List<Menu> menus = menuService.findMenus("");
         // 创建一个最后筛选完成之后的list
-        List<Menu> rolesmenus = new ArrayList<>();
+        List<Menu> rolemenus = new ArrayList<>();
         //筛选当前用户角色菜单
         for (Menu menu : menus) {
             if (menuIds.contains(menu.getId())) {
-                rolesmenus.add(menu);
+                rolemenus.add(menu);
             }
             List<Menu> children = menu.getChildren();
             //移除children 里面不在menuIds集合中的元素
             children.removeIf(child -> !menuIds.contains(child.getId()));
         }
-    return rolesmenus;
+    return rolemenus;
     }
 
 }

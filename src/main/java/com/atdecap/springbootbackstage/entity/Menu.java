@@ -14,7 +14,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Decap
@@ -43,7 +43,7 @@ public class Menu implements Serializable {
 
   @ApiModelProperty("描述")
   private String description;
-
+//标识数据库对应字段不存在
   @TableField(exist = false)
   private List<Menu> children;
 

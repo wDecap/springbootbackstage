@@ -277,12 +277,12 @@
     }
     @font-face {
         font-family: "iconfont"; /* Project id 3387991 */
-        src: url('./font/iconfont.eot?t=1652091954316'); /* IE9 */
-        src: url('./font/iconfont.eot?t=1652091954316#iefix') format('embedded-opentype'), /* IE6-IE8 */
-        url('./font/iconfont.woff2?t=1652091954316') format('woff2'),
-        url('./font/iconfont.woff?t=1652091954316') format('woff'),
-        url('./font/iconfont.ttf?t=1652091954316') format('truetype'),
-        url('./font/iconfont.svg?t=1652091954316#iconfont') format('svg');
+        src: url('font/iconfont.eot?t=1652091954316'); /* IE9 */
+        src: url('font/iconfont.eot?t=1652091954316#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('font/iconfont.woff2?t=1652091954316') format('woff2'),
+        url('font/iconfont.woff?t=1652091954316') format('woff'),
+        url('font/iconfont.ttf?t=1652091954316') format('truetype'),
+        url('font/iconfont.svg?t=1652091954316#iconfont') format('svg');
     }
 
     .iconfont {

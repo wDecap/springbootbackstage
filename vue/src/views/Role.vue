@@ -244,11 +244,15 @@
                 })
 
                 this.request.get("/role/roleMenu/" + this.roleId).then(res => {
+                    // this.menuDialogVis = true
                     this.checks = res.data
+                    // this.request.get("/menu/ids").then(r=>{ const ids=r.data
+                    //     ids.forEach(id => {
+                    //     if (!this.checks.includes(id)) {this.$refs.tree.setChecked(id, false)} })
                     this.ids.forEach(id => {
                         if (!this.checks.includes(id)) {
-                            // 可能会报错：Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'setChecked')
-                            this.$nextTick(() => {
+                            // 可能会报错：Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'setChecked')原因是因为tree还没数据就调用setChecked方法导致undefined
+                            this.$nextTick(() => { //在下一个时段处理 也就是把tree渲染出来有数据在调用setChecked方法
                                 this.$refs.tree.setChecked(id, false)
                             })
                         }

@@ -1,237 +1,215 @@
 <template>
-    <div>
-        <el-row>
-            <el-col :span="12">
-                <div id="main" style="width: 500px; height: 500px"></div>
-            </el-col>
+    <div class="is-boxed has-animations">
+    <div class="body-wrap boxed-container">
+        <header class="site-header">
+            <div class="container">
+                <div class="site-header-inner">
+                    <div class="brand header-brand">
+                        <h1 class="m-0">
+                            <a href="#">
+                                <img class="header-logo-image asset-light" src="../assets/dist/images/logo-light.svg" alt="Logo">
+<!--                                <img class="header-logo-image asset-dark" src="../assets/dist/images/logo-dark.svg" alt="Logo">-->
+                            </a>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-            <el-col :span="12">
-               <div id="cat" style="width: 500px; height: 500px"></div>
-            </el-col>
-            </el-row>
+        <main>
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-inner">
+                        <div class="hero-copy">
+                            <h1 class="hero-title mt-0">Welcome</h1>
+                            <p class="hero-paragraph">This backend management system was developed by author Decap.The source code link is on GITHUB</p>
+                            <div class="hero-cta">
+                                <a class="button button-primary" href="https://github.com/AXDecap/springbootbackstage">github</a>
+                                <div class="lights-toggle">
+                                    <input id="lights-toggle" type="checkbox" name="lights-toggle" class="switch" checked="checked">
+                                    <label for="lights-toggle" class="text-xs"><span>Turn me <span class="label-text">dark</span></span></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-media">
+                            <div class="header-illustration">
+                                <img class="header-illustration-image asset-light" src="../assets/dist/images/header-illustration-light.svg" alt="Header illustration">
+<!--                                <img class="header-illustration-image asset-dark" src="../assets/dist/images/header-illustration-dark.svg" alt="Header illustration">-->
+                            </div>
+                            <div class="hero-media-illustration">
+                                <img class="hero-media-illustration-image asset-light" src="../assets/dist/images/hero-media-illustration-light.svg" alt="Hero media illustration">
+<!--                                <img class="hero-media-illustration-image asset-dark" src="../assets/dist/images/hero-media-illustration-dark.svg" alt="Hero media illustration">-->
+                            </div>
+                            <div class="hero-media-container">
+                                <img class="hero-media-image asset-light" src="../assets/dist/images/githubpage.svg" alt="Hero media">
+<!--                                <img class="hero-media-image asset-dark" src="../assets/dist/images/hero-media-dark.svg" alt="Hero media">-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="features section">
+                <div class="container">
+                    <div class="features-inner section-inner has-bottom-divider">
+                        <div class="features-header text-center">
+                            <div class="container-sm">
+                                <h2 class="section-title mt-0">Technology Stack</h2>
+                                <p class="section-paragraph">Back End:SpringBoot2 Hutool Poi Lombok JWT Mybatis/Mybatis-plus ...</p>
+                                <p class="section-paragraph">Front End:Vue2 Vue-Router VueX ElementUI Axios  iconfont...</p>
+                                <p class="section-paragraph">Database:MySql Redis</p>
+<!--                                <div class="features-image">-->
+<!--&lt;!&ndash;                                    <img class="features-illustration asset-dark" src="../assets/dist/images/features-illustration-dark.svg" alt="Feature illustration">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <img class="features-box asset-dark" src="../assets/dist/images/features-box-dark.svg" alt="Feature box">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <img class="features-illustration asset-dark" src="../assets/dist/images/features-illustration-top-dark.svg" alt="Feature illustration top">&ndash;&gt;-->
+<!--                                    <img class="features-illustration asset-light" src="../assets/dist/images/features-illustration-light.svg" alt="Feature illustration">-->
+<!--                                    <img class="features-box asset-light" src="../assets/dist/images/features-box-light.svg" alt="Feature box">-->
+<!--                                    <img class="features-illustration asset-light" src="../assets/dist/images/features-illustration-top-light.svg" alt="Feature illustration top">-->
+<!--                                </div>-->
+                            </div>
+                        </div>
+<!--                        <div class="features-wrap">-->
+<!--                            <div class="feature is-revealing">-->
+<!--                                <div class="feature-inner">-->
+<!--                                    <div class="feature-icon">-->
+<!--                                        <img class="asset-light" src="../assets/dist/images/feature-01-light.svg" alt="Feature 01">-->
+<!--                                       <img class="asset-dark" src="../assets/dist/images/feature-01-dark.svg" alt="Feature 01">&ndash;&gt;-->
+<!--                                    </div>-->
+<!--                                    <div class="feature-content">-->
+<!--                                        <h3 class="feature-title mt-0">Discover</h3>-->
+<!--                                        <p class="text-sm mb-0">Lorem ipsum dolor sit amet, consecte adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua dui.</p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="feature is-revealing">-->
+<!--                                <div class="feature-inner">-->
+<!--                                    <div class="feature-icon">-->
+<!--                                        <img class="asset-light" src="../assets/dist/images/feature-02-light.svg" alt="Feature 02">-->
+<!--                                      <img class="asset-dark" src="../assets/dist/images/feature-02-dark.svg" alt="Feature 02">&ndash;&gt;-->
+<!--                                    </div>-->
+<!--                                    <div class="feature-content">-->
+<!--                                        <h3 class="feature-title mt-0">Discover</h3>-->
+<!--                                        <p class="text-sm mb-0">Lorem ipsum dolor sit amet, consecte adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua dui.</p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="feature is-revealing">-->
+<!--                                <div class="feature-inner">-->
+<!--                                    <div class="feature-icon">-->
+<!--                                        <img class="asset-light" src="../assets/dist/images/feature-03-light.svg" alt="Feature 03">-->
+<!--                                       <img class="asset-dark" src="../assets/dist/images/feature-03-dark.svg" alt="Feature 03">&ndash;&gt;-->
+<!--                                    </div>-->
+<!--                                    <div class="feature-content">-->
+<!--                                        <h3 class="feature-title mt-0">Discover</h3>-->
+<!--                                        <p class="text-sm mb-0">Lorem ipsum dolor sit amet, consecte adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua dui.</p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+            </section>
+
+            <section class="cta section">
+                <div class="container-sm">
+                    <div class="cta-inner section-inner">
+                        <div class="cta-header text-center">
+                            <h2 class="section-title mt-0">Donate and encourage authors</h2>
+                            <p class="section-paragraph">Buy the author a cup of milk tea.</p>
+                            <div class="features-image">
+<!--                                <img class="features-illustration asset-dark" src="../assets/dist/images/features-illustration-dark.svg" alt="Feature illustration">-->
+<!--                                <img class="features-box asset-dark" src="../assets/dist/images/features-box-dark.svg" alt="Feature box">-->
+<!--                                <img class="features-illustration asset-dark" src="../assets/dist/images/features-illustration-top-dark.svg" alt="Feature illustration top">-->
+                                <img class="features-illustration asset-light" src="../assets/dist/images/features-illustration-light.svg" alt="Feature illustration">
+                                <img class="features-box asset-light" src="../assets/dist/images/features-box-light.svg" alt="Feature box">
+                                <img class="features-illustration asset-light" src="../assets/dist/images/features-illustration-top-light.svg" alt="Feature illustration top">
+                            </div>
+                            <div class="cta-cta">
+                                <a class="button button-primary" href="#">Thanks</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <footer class="site-footer has-top-divider">
+            <div class="container">
+                <div class="site-footer-inner">
+                    <div class="brand footer-brand">
+                        <a href="#">
+                            <img class="asset-light" src="../assets/dist/images/logo-light.svg" alt="Logo">
+<!--                            <img class="asset-dark" src="../assets/dist/images/logo-dark.svg" alt="Logo">-->
+                        </a>
+                    </div>
+                    <ul class="footer-links list-reset">
+                        <li>
+                            <a href="#">Contact</a>
+                        </li>
+                        <li>
+                            <a href="#">About us</a>
+                        </li>
+                        <li>
+                            <a href="#">FAQ's</a>
+                        </li>
+                        <li>
+                            <a href="#">Support</a>
+                        </li>
+                    </ul>
+                    <ul class="footer-social-links list-reset">
+                        <li>
+                            <a href="#">
+                                <span class="screen-reader-text">Facebook</span>
+                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6.023 16L6 9H3V6h3V4c0-2.7 1.672-4 4.08-4 1.153 0 2.144.086 2.433.124v2.821h-1.67c-1.31 0-1.563.623-1.563 1.536V6H13l-1 3H9.28v7H6.023z" fill="#FFF"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="screen-reader-text">Twitter</span>
+                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16 3c-.6.3-1.2.4-1.9.5.7-.4 1.2-1 1.4-1.8-.6.4-1.3.6-2.1.8-.6-.6-1.5-1-2.4-1-1.7 0-3.2 1.5-3.2 3.3 0 .3 0 .5.1.7-2.7-.1-5.2-1.4-6.8-3.4-.3.5-.4 1-.4 1.7 0 1.1.6 2.1 1.5 2.7-.5 0-1-.2-1.5-.4C.7 7.7 1.8 9 3.3 9.3c-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.3 1.6 2.3 3.1 2.3-1.1.9-2.5 1.4-4.1 1.4H0c1.5.9 3.2 1.5 5 1.5 6 0 9.3-5 9.3-9.3v-.4C15 4.3 15.6 3.7 16 3z" fill="#FFF"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="screen-reader-text">Google</span>
+                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7.9 7v2.4H12c-.2 1-1.2 3-4 3-2.4 0-4.3-2-4.3-4.4 0-2.4 2-4.4 4.3-4.4 1.4 0 2.3.6 2.8 1.1l1.9-1.8C11.5 1.7 9.9 1 8 1 4.1 1 1 4.1 1 8s3.1 7 7 7c4 0 6.7-2.8 6.7-6.8 0-.5 0-.8-.1-1.2H7.9z" fill="#FFF"/>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="footer-copyright">&copy; 2022 Decap, all rights reserved</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
     </div>
 </template>
 
 <script>
-    import * as echarts from  'echarts'
+   // import '../assets/dist/js/main.min.js'
     export default {
         name: "Home",
-        data(){
-            return{
-
-            }
+        mounted() {
+            var element = document.createElement("script");
+            element.src = "https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"
+            document.body.appendChild(element);
         },
-        mounted() { //页面元素渲染之后再触发
-            var chartDom = document.getElementById('main');
-            var myChart = echarts.init(chartDom);
-            var Option;
-
-            setTimeout(function () {
-                Option = {
-                    legend: {},
-                    tooltip: {
-                        trigger: 'axis',
-                        showContent: false
-                    },
-                    dataset: {
-                        source: [
-                            ['product', '2018', '2019', '2020', '2021', '2022', '2023'],
-                            ['Milk Tea', 56.5, 82.1, 88.7, 70.1, 53.4, 85.1],
-                            ['Matcha Latte', 51.1, 51.4, 55.1, 53.3, 73.8, 68.7],
-                            ['Cheese Cocoa', 40.1, 62.2, 69.5, 36.4, 45.2, 32.5],
-                            ['Walnut Brownie', 25.2, 37.1, 41.2, 18, 33.9, 49.1]
-                        ]
-                    },
-                    xAxis: { type: 'category' },
-                    yAxis: { gridIndex: 0 },
-                    grid: { top: '55%' },
-                    series: [
-                        {
-                            type: 'line',
-                            smooth: true,
-                            seriesLayoutBy: 'row',
-                            emphasis: { focus: 'series' }
-                        },
-                        {
-                            type: 'line',
-                            smooth: true,
-                            seriesLayoutBy: 'row',
-                            emphasis: { focus: 'series' }
-                        },
-                        {
-                            type: 'line',
-                            smooth: true,
-                            seriesLayoutBy: 'row',
-                            emphasis: { focus: 'series' }
-                        },
-                        {
-                            type: 'line',
-                            smooth: true,
-                            seriesLayoutBy: 'row',
-                            emphasis: { focus: 'series' }
-                        },
-                        {
-                            type: 'pie',
-                            id: 'pie',
-                            radius: '30%',
-                            center: ['50%', '25%'],
-                            emphasis: {
-                                focus: 'self'
-                            },
-                            label: {
-                                formatter: '{b}: {@2012} ({d}%)'
-                            },
-                            encode: {
-                                itemName: 'product',
-                                value: '2012',
-                                tooltip: '2012'
-                            }
-                        }
-                    ]
-                };
-                myChart.on('updateAxisPointer', function (event) {
-                    const xAxisInfo = event.axesInfo[0];
-                    if (xAxisInfo) {
-                        const dimension = xAxisInfo.value + 1;
-                        myChart.setOption({
-                            series: {
-                                id: 'pie',
-                                label: {
-                                    formatter: '{b}: {@[' + dimension + ']} ({d}%)'
-                                },
-                                encode: {
-                                    value: dimension,
-                                    tooltip: dimension
-                                }
-                            }
-                        });
-                    }
-                });
-                myChart.setOption(Option);
-
-            });
-            catOption = {
-                title: {
-                    text: '',
-                    subtext: '',
-                    left: 'center'
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'cross',
-                        label: {
-                            backgroundColor: '#6a7985'
-                        }
-                    }
-                },
-                legend: {
-                    data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
-                },
-                toolbox: {
-                    feature: {
-                        saveAsImage: {}
-                    }
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: [
-                    {
-                        type: 'category',
-                        boundaryGap: false,
-                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-                    }
-                ],
-                yAxis: [
-                    {
-                        type: 'value'
-                    }
-                ],
-                series: [
-                    {
-                        name: 'Email',
-                        type: 'line',
-                        stack: 'Total',
-                        areaStyle: {},
-                        emphasis: {
-                            focus: 'series'
-                        },
-                        data: [120, 132, 101, 134, 90, 230, 210]
-                    },
-                    {
-                        name: 'Union Ads',
-                        type: 'line',
-                        stack: 'Total',
-                        areaStyle: {},
-                        emphasis: {
-                            focus: 'series'
-                        },
-                        data: [220, 182, 191, 234, 290, 330, 310]
-                    },
-                    {
-                        name: 'Video Ads',
-                        type: 'line',
-                        stack: 'Total',
-                        areaStyle: {},
-                        emphasis: {
-                            focus: 'series'
-                        },
-                        data: [150, 232, 201, 154, 190, 330, 410]
-                    },
-                    {
-                        name: 'Direct',
-                        type: 'line',
-                        stack: 'Total',
-                        areaStyle: {},
-                        emphasis: {
-                            focus: 'series'
-                        },
-                        data: [320, 332, 301, 334, 390, 330, 320]
-                    },
-                    {
-                        name: 'Search Engine',
-                        type: 'line',
-                        stack: 'Total',
-                        label: {
-                            show: true,
-                            position: 'top'
-                        },
-                        areaStyle: {},
-                        emphasis: {
-                            focus: 'series'
-                        },
-                        data: [820, 932, 901, 934, 1290, 1330, 1320]
-                    }
-                ]
-            };
-            var catDom = document.getElementById('cat');
-            var catChart = echarts.init(catDom);
-            var catOption;
-            // this.request.get("/echarts/example").then(res =>{
-            // //     catOption.xAxis.data =res.data.x
-            //     catOption.series[0].data=res.data.y1
-            //     catOption.series[1].data=res.data.y2
-            //     catOption.series[2].data=res.data.y3
-            //     catOption.series[3].data=res.data.y4
-            //     catOption.series[4].data=res.data.y5
-                //数据准备完毕之后再set
-                catChart.setOption(catOption)
-            // })
-            // this.request.get("/echarts/members").then(res =>{
-            //     catOption.series[0].data=res.data
-            //     catOption.series[1].data=res.data
-            //     catChart.setOption(catOption)
-            // })
-
-
+        data() {
+            return {
+                user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+            }
         }
     }
 </script>
-
-<style scoped>
+<style>
+   @import "../assets/dist/css/style.css";
+   @import url('https://fonts.googleapis.com/css?family=Heebo:400,700|IBM+Plex+Sans:600');
 
 </style>

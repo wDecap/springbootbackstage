@@ -1,10 +1,13 @@
 package com.atdecap.springbootbackstage.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,12 +16,13 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Decap
  * @since 2022-05-03
  */
+@TableName("sys_user")
 @ApiModel(value = "User对象", description = "")
 public class User implements Serializable {
 
@@ -59,7 +63,13 @@ public class User implements Serializable {
       @ApiModelProperty("角色")
       private String role;
 
-    
+      @TableField(exist = false)
+      private List<Course> courses;
+
+      @TableField(exist = false)
+      private List<Course> stuCourses;
+
+
     public Integer getId() {
         return id;
     }
@@ -67,7 +77,7 @@ public class User implements Serializable {
       public void setId(Integer id) {
           this.id = id;
       }
-    
+
     public String getUsername() {
         return username;
     }
@@ -75,7 +85,7 @@ public class User implements Serializable {
       public void setUsername(String username) {
           this.username = username;
       }
-    
+
     public String getPassword() {
         return password;
     }
@@ -95,7 +105,7 @@ public class User implements Serializable {
       public void setEmail(String email) {
           this.email = email;
       }
-    
+
     public String getTelephone() {
         return telephone;
     }
@@ -103,7 +113,7 @@ public class User implements Serializable {
       public void setTelephone(String telephone) {
           this.telephone = telephone;
       }
-    
+
     public String getAddress() {
         return address;
     }
@@ -111,7 +121,7 @@ public class User implements Serializable {
       public void setAddress(String address) {
           this.address = address;
       }
-    
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -119,7 +129,7 @@ public class User implements Serializable {
       public void setCreateTime(Date createTime) {
           this.createTime = createTime;
       }
-    
+
     public String getAvatarUrl() {
         return avatarUrl;
     }
@@ -127,7 +137,7 @@ public class User implements Serializable {
       public void setAvatarUrl(String avatarUrl) {
           this.avatarUrl = avatarUrl;
       }
-    
+
     public String getIntegration() {
         return integration;
     }
@@ -143,6 +153,21 @@ public class User implements Serializable {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+    public List<Course> getStuCourses() {
+        return stuCourses;
+    }
+    public void setStuCourses(List<Course> stuCourses) {
+        this.stuCourses = stuCourses;
+    }
+
 
     @Override
     public String toString() {

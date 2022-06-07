@@ -31,21 +31,22 @@
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="id" label="ID" width="80"></el-table-column>
         <el-table-column prop="username" label="用户名" width="100"></el-table-column>
-        <el-table-column prop="role" label="角色" width="100"></el-table-column>
-<!--        <template slot-scope="scope">-->
-<!--            <el-tag type="primary" v-if="scope.row.role === 'ROLE_ADMIN'">管理员</el-tag>-->
-<!--            <el-tag type="warning" v-if="scope.row.role === 'ROLE_TEACHER'">老师</el-tag>-->
-<!--            <el-tag type="success" v-if="scope.row.role === 'ROLE_STUDENT'">学生</el-tag>-->
-<!--        </template>-->
-        <el-table-column prop="nickname" label="昵称" width="120"></el-table-column>
+        <el-table-column prop="role" label="角色" width="120">
+        <template slot-scope="scope">
+            <el-tag type="primary" v-if="scope.row.role === 'ROLE_ADMIN'">管理员</el-tag>
+            <el-tag type="warning" v-if="scope.row.role === 'ROLE_TEACHER'">老师</el-tag>
+            <el-tag type="success" v-if="scope.row.role === 'ROLE_STUDENT'">学生</el-tag>
+        </template>
+        </el-table-column>
+        <el-table-column prop="nickname" label="昵称" width="100"></el-table-column>
         <el-table-column prop="email" label="邮箱" width="120"></el-table-column>
-        <el-table-column prop="telephone" label="电话" width="120"></el-table-column>
+        <el-table-column prop="telephone" label="电话" width="100"></el-table-column>
         <el-table-column prop="address" label="地址"></el-table-column>
 
-        <el-table-column prop="operation" label="操作"width="240" align="center">
+        <el-table-column prop="operation" label="操作"width="300" align="center">
             <template slot-scope="scope">
-<!--                <el-button type="primary" @click="lookCourse(scope.row.courses)" v-if="scope.row.role === 'ROLE_TEACHER'">查看教授课程 <i class="el-icon-document"></i></el-button>-->
-<!--                <el-button type="warning" @click="lookStuCourse(scope.row.stuCourses)" v-if="scope.row.role === 'ROLE_STUDENT'">查看已选课程 <i class="el-icon-document"></i></el-button>-->
+                <el-button type="primary" @click="lookCourse(scope.row.courses)" v-if="scope.row.role === 'ROLE_TEACHER'">查看教授课程 <i class="el-icon-document"></i></el-button>
+                <el-button type="warning" @click="lookStuCourse(scope.row.stuCourses)" v-if="scope.row.role === 'ROLE_STUDENT'">查看已选课程 <i class="el-icon-document"></i></el-button>
                 <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
                 <el-popconfirm
                         class="ml-5"
@@ -101,19 +102,19 @@
             <el-button type="primary" @click="save">确 定</el-button>
         </div>
     </el-dialog>
-<!--    <el-dialog title="课程信息" :visible.sync="vis" width="30%" >-->
-<!--        <el-table :data="courses" border stripe>-->
-<!--            <el-table-column prop="name" label="课程名称"></el-table-column>-->
-<!--            <el-table-column prop="score" label="学分"></el-table-column>-->
-<!--        </el-table>-->
-<!--    </el-dialog>-->
+    <el-dialog title="课程信息" :visible.sync="vis" width="30%" >
+        <el-table :data="courses" border stripe>
+            <el-table-column prop="name" label="课程名称"></el-table-column>
+            <el-table-column prop="score" label="学分"></el-table-column>
+        </el-table>
+    </el-dialog>
 
-<!--    <el-dialog title="课程信息" :visible.sync="stuVis" width="30%" >-->
-<!--        <el-table :data="stuCourses" border stripe>-->
-<!--            <el-table-column prop="name" label="课程名称"></el-table-column>-->
-<!--            <el-table-column prop="score" label="学分"></el-table-column>-->
-<!--        </el-table>-->
-<!--    </el-dialog>-->
+    <el-dialog title="课程信息" :visible.sync="stuVis" width="30%" >
+        <el-table :data="stuCourses" border stripe>
+            <el-table-column prop="name" label="课程名称"></el-table-column>
+            <el-table-column prop="score" label="学分"></el-table-column>
+        </el-table>
+    </el-dialog>
 </div>
 </template>
 
@@ -134,10 +135,10 @@
                 dialogFormVisible: false,
                 multipleSelection: [],
                 roles: [],
-                // courses: [],
-                // vis: false,
-                // stuCourses: [],
-                // stuVis: false
+                courses: [],
+                vis: false,
+                stuCourses: [],
+                stuVis: false
             }
         },
         created() {
@@ -145,14 +146,14 @@
             this.load()
         },
         methods:{
-            // lookCourse(courses) {
-            //     this.courses = courses
-            //     this.vis = true
-            // },
-            // lookStuCourse(stuCourses) {
-            //     this.stuCourses = stuCourses
-            //     this.stuVis = true
-            // },
+            lookCourse(courses) {
+                this.courses = courses
+                this.vis = true
+            },
+            lookStuCourse(stuCourses) {
+                this.stuCourses = stuCourses
+                this.stuVis = true
+            },
             load(){
                 /*fetch请求分页查询*/
                 // fetch("http://localhost:8888/user/page?pageNum="+this.pageNum+ "&pageSize="+ this.pageSize+ "&integration=" + this.integration ).then(res => res.json()).then(res =>{
