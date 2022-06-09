@@ -4,12 +4,17 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
+import com.atdecap.springbootbackstage.common.Constants;
 import com.atdecap.springbootbackstage.common.Result;
 import com.atdecap.springbootbackstage.entity.Files;
 import com.atdecap.springbootbackstage.mapper.FileMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,11 +37,18 @@ import java.util.List;
 @RequestMapping("/file")
 public class FileController {
 
-    @Value("${files.upload.path}") //把配置文件引进来
+    @Value("${files.upload.path}")   //把配置文件引进来
     private String fileUploadPath;
+
+    @Value("${server.ip}")
+    private String serverIp;
 
     @Resource
     private FileMapper fileMapper;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
     /**
      * 文件上传接口
      * @param file 前端传递过来的文件
@@ -82,7 +94,7 @@ public class FileController {
             // 上传文件到磁盘
 //            file.transferTo(uploadFile);
             // 数据库若不存在重复文件，则不删除刚才上传的文件
-            url = "http://localhost:8888/file/" + fileUUID;
+            url = "http://" + serverIp + ":8888/file/" + fileUUID;
         }
       /* 不删了留着吸取教训(花了1.5h) if的条件错了  uploadFile每次都是新的因为源头的originalFilename每次都不一样 String type = FileUtil.extName(originalFilename);
       File uploadFile = new File(fileUploadPath + fileUUID);
@@ -130,11 +142,27 @@ public class FileController {
         saveFile.setUrl(url);
         saveFile.setMd5(md5);
         fileMapper.insert(saveFile);
+        // 从redis取出数据，操作完，再设置（不用查询数据库） 性能好
+//        String json = stringRedisTemplate.opsForValue().get(Constants.FILES_KEY);
+//        List<Files> files1 = JSONUtil.toBean(json, new TypeReference<List<Files>>() {
+//        }, true);
+//        files1.add(saveFile);
+//        setCache(Constants.FILES_KEY, JSONUtil.toJsonStr(files1));
+
+
+        // 从数据库查出数据  性能不好
+//        List<Files> files = fileMapper.selectList(null);
+//        // 设置最新的缓存
+//        setCache(Constants.FILES_KEY, JSONUtil.toJsonStr(files));
+
+        // 最简单的方式：直接清空缓存 但很耗性能
+        flushRedis(Constants.FILES_KEY);
+
         return url;
     }
 
     /**
-     * 文件下载接口   http://localhost:9090/file/{fileUUID}
+     * 文件下载接口   http://localhost:8888/file/{fileUUID}
      * @param fileUUID
      * @param response
      * @throws IOException
@@ -165,17 +193,27 @@ public class FileController {
         List<Files> filesList = fileMapper.selectList(queryWrapper);
         return filesList.size() == 0 ? null : filesList.get(0);
     }
-
+//    @CachePut(value = "files" ,key ="'frontAll'")
     @PostMapping("/update")
     public Result update(@RequestBody Files files) {
-        return Result.success(fileMapper.updateById(files));
+        fileMapper.updateById(files);
+        flushRedis(Constants.FILES_KEY);
+        return Result.success();
     }
 
+    @GetMapping("/detail/{id}")
+    public Result getById(@PathVariable Integer id) {
+        return Result.success(fileMapper.selectById(id));
+    }
+
+    //清除一条缓存，key为要清空的数据
+  //  @CacheEvict(value = "files"  ,key="'frontAll'")
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         Files files = fileMapper.selectById(id);
         files.setIsDelete(true);
         fileMapper.updateById(files);
+        flushRedis(Constants.FILES_KEY);
         return Result.success();
     }
 
@@ -212,4 +250,16 @@ public class FileController {
         }
         return Result.success(fileMapper.selectPage(new Page<>(pageNum, pageSize), queryWrapper));
     }
+
+    // 设置缓存
+    private void setCache(String key, String value) {
+        stringRedisTemplate.opsForValue().set(key, value);
+    }
+
+    // 删除缓存
+    private void flushRedis(String key) {
+        stringRedisTemplate.delete(key);
+    }
+
+
 }

@@ -27,53 +27,53 @@ const routes = [
         name: 'index',
         component: () => import('../views/Home.vue')
     },
-    // {
-    //     path: '/front',
-    //     name: 'Front',
-    //     component: () => import('../views/front/Front'),
-    //     children: [
-    //         {
-    //             path: 'home',
-    //             name: 'FrontHome',
-    //             component: () => import('../views/front/Home.vue')
-    //         },
-    //         {
-    //             path: 'item1',
-    //             name: 'Item1',
-    //             component: () => import('../views/front/Item1.vue')
-    //         },
-    //         {
-    //             path: 'person',
-    //             name: 'FrontPerson',
-    //             component: () => import('../views/front/Person')
-    //         },
-    //         {
-    //             path: 'password',
-    //             name: 'FrontPassword',
-    //             component: () => import('../views/front/Password')
-    //         },
-    //         {
-    //             path: 'video',
-    //             name: 'Video',
-    //             component: () => import('../views/front/Video')
-    //         },
-    //         {
-    //             path: 'videoDetail',
-    //             name: 'VideoDetail',
-    //             component: () => import('../views/front/VideoDetail')
-    //         },
-    //         {
-    //             path: 'article',
-    //             name: 'FrontArticle',
-    //             component: () => import('../views/front/Article')
-    //         },
-    //         {
-    //             path: 'articleDetail',
-    //             name: 'ArticleDetail',
-    //             component: () => import('../views/front/ArticleDetail')
-    //         },
-    //     ]
-    // },
+    {
+        path: '/front',
+        name: 'Front',
+        component: () => import('../views/front/Front'),
+        children: [
+            {
+                path: 'home',
+                name: 'FrontHome',
+                component: () => import('../views/front/Home.vue')
+            },
+            {
+                path: 'item1',
+                name: 'Item1',
+                component: () => import('../views/front/Item1.vue')
+            },
+            {
+                path: 'person',
+                name: 'FrontPerson',
+                component: () => import('../views/front/Person')
+            },
+            {
+                path: 'password',
+                name: 'FrontPassword',
+                component: () => import('../views/front/Password')
+            },
+            {
+                path: 'video',
+                name: 'Video',
+                component: () => import('../views/front/Video')
+            },
+            {
+                path: 'videoDetail',
+                name: 'VideoDetail',
+                component: () => import('../views/front/VideoDetail')
+            },
+            {
+                path: 'article',
+                name: 'FrontArticle',
+                component: () => import('../views/front/Article')
+            },
+            {
+                path: 'articleDetail',
+                name: 'ArticleDetail',
+                component: () => import('../views/front/ArticleDetail')
+            },
+        ]
+    },
 ]
 
 const router = new VueRouter({

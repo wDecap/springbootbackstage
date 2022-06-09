@@ -96,12 +96,12 @@
 </template>
 
 <script>
-    // import {serverIp} from "../../public/config";
+    import {serverIp} from "../../public/config";
     export default {
         name: "Menu",
         data(){
             return{
-                // serverIp: serverIp,
+                serverIp: serverIp,
                 tableData: [],
                 total: 0,
                 pageNum: 1,
@@ -202,13 +202,13 @@
                 this.pageNum = pageNum
                 this.load()
             },
-            exp(){
-                window.open(`http://localhost:8888/role/export`)
-            },
-            handleExcelImportSuccess(){
-                this.$message.success("导入上传成功")
-                this.load()
-            }
+            // exp(){
+            //     window.open(`http://${serverIp}:8888/role/export`)
+            // },
+            // handleExcelImportSuccess(){
+            //     this.$message.success("导入上传成功")
+            //     this.load()
+            // }
 
         }
     }

@@ -11,4 +11,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @desc
  **/
 public interface FileMapper extends BaseMapper<Files> {
+
 }

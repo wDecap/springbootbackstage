@@ -2,6 +2,7 @@ package com.atdecap.springbootbackstage.config.interceptor;
 
 import cn.hutool.core.util.StrUtil;
 
+import com.atdecap.springbootbackstage.config.AuthAccess;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -37,6 +38,12 @@ public class JwtInterceptor implements HandlerInterceptor {
         // 如果不是映射到方法直接通过
         if(!(handler instanceof HandlerMethod)){
             return true;
+        } else {
+            HandlerMethod h = (HandlerMethod) handler; //把handler强转成HandlerMethod
+            AuthAccess authAccess = h.getMethodAnnotation(AuthAccess.class);//获取自定义注解@AuthAccess
+            if (authAccess != null) { //有自定义注解直接通过
+                return true;
+            }
         }
         // 执行认证
         if (StrUtil.isBlank(token)) {

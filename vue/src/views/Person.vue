@@ -3,7 +3,7 @@
     <el-form label-width="80px" size="small" >
         <el-upload
                 class="avatar-uploader"
-                action="http://localhost:8888/file/upload"
+                action="http://' + serverIp +':8888/file/upload"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess">
             <img v-if="form.avatarUrl" :src="form.avatarUrl" class="avatar">
@@ -32,10 +32,12 @@
 </template>
 
 <script>
+import {serverIp} from "../../public/config";
     export default {
         name: "Person",
         data(){
             return{
+                serverIp: serverIp,
                 form: {},
                 user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
             }

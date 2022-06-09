@@ -1,37 +1,47 @@
-//package com.atdecap.springbootbackstage.controller;
-//
+package com.atdecap.springbootbackstage.controller;
+
 //import cn.hutool.core.collection.CollUtil;
 //import cn.hutool.core.date.DateUtil;
 //import cn.hutool.core.date.Quarter;
 //import cn.hutool.core.lang.TypeReference;
 //import cn.hutool.core.util.StrUtil;
 //import cn.hutool.json.JSONUtil;
-//import com.atdecap.springbootbackstage.common.Result;
+import cn.hutool.core.lang.TypeReference;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
+import com.atdecap.springbootbackstage.common.Constants;
+import com.atdecap.springbootbackstage.common.Result;
+import com.atdecap.springbootbackstage.config.AuthAccess;
+import com.atdecap.springbootbackstage.entity.Files;
 //import com.atdecap.springbootbackstage.entity.User;
-//import com.atdecap.springbootbackstage.mapper.FileMapper;
+import com.atdecap.springbootbackstage.mapper.FileMapper;
 //import com.atdecap.springbootbackstage.service.IUserService;
 //import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RestController;
-//
-//import javax.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+import javax.annotation.Resource;
 //import java.util.Date;
 //import java.util.HashMap;
-//import java.util.List;
+import java.util.List;
 //import java.util.Map;
 //
-///**
-// * @author Decap
-// * @BelongsProject: IntelliJ IDEA
-// * @BelongsPackage: com.atdecap.springbootbackstage.controller
-// * @create 2022-05-2022/5/23 8:49
-// * @desc
-// **/
-////@RestController
-////@RequestMapping("/echarts")
+/**
+ * @author Decap
+ * @BelongsProject: IntelliJ IDEA
+ * @BelongsPackage: com.atdecap.springbootbackstage.controller
+ * @create 2022-05-2022/5/23 8:49
+ * @desc
+ **/
+//@RestController
+//@RequestMapping("/echarts")
 ////
-////public class EchartsController {
+//public class EchartsController {
 ////    @Autowired
 ////    private IUserService userService;
 ////
@@ -70,19 +80,20 @@
 ////
 ////}
 ////
-//@RestController
-//@RequestMapping("/echarts")
-//public class EchartsController {
-//
+@RestController
+@RequestMapping("/echarts")
+public class EchartsController {
+    //
 //    @Autowired
 //    private IUserService userService;
 //
-//    @Resource
-//    private FileMapper fileMapper;
-//
-////    @Autowired
-////    private StringRedisTemplate stringRedisTemplate;
-//
+    @Resource
+    private FileMapper fileMapper;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+
 //    @GetMapping("/example")
 //    public Result get() {
 //        Map<String, Object> map = new HashMap<>();
@@ -112,24 +123,27 @@
 //        return Result.success(CollUtil.newArrayList(q1, q2, q3, q4));
 //    }
 //
-////    @AuthAccess
-////    @GetMapping("/file/front/all")
-//////    @Cacheable(value = "files" ,key = "'frontAll'")
-////    public Result frontAll() {
-////        // 1. 从缓存获取数据
-////        String jsonStr = stringRedisTemplate.opsForValue().get(Constants.FILES_KEY);
-////        List<Files> files;
-////        if (StrUtil.isBlank(jsonStr)) {  // 2. 取出来的json是空的
-////            files = fileMapper.selectList(null);  // 3. 从数据库取出数据
-////            // 4. 再去缓存到redis
-////            stringRedisTemplate.opsForValue().set(Constants.FILES_KEY, JSONUtil.toJsonStr(files));
-////        } else {
-////            // 减轻数据库的压力
-////            // 5. 如果有, 从redis缓存中获取数据
-////            files = JSONUtil.toBean(jsonStr, new TypeReference<List<Files>>() {
-////            }, true);
-////        }
-////        return Result.success(files);
-////    }
+    @AuthAccess
+    @GetMapping("/file/front/all")
+//    @Cacheable(value = "files" ,key = "'frontAll'")
+    public Result frontAll() {
+        // 1. 从缓存获取数据
+        String jsonStr = stringRedisTemplate.opsForValue().get(Constants.FILES_KEY);
+        List<Files> files;
+        if (StrUtil.isBlank(jsonStr)) {  // 2. 取出来的json是空的
+            files = fileMapper.selectList(null);  // 3. 从数据库取出数据
+            // 4. 再去缓存到redis
+            stringRedisTemplate.opsForValue().set(Constants.FILES_KEY, JSONUtil.toJsonStr(files));
+        } else {
+            // 减轻数据库的压力
+            // 5. 如果有, 从redis缓存中获取数据
+            files = JSONUtil.toBean(jsonStr, new TypeReference<List<Files>>() {
+
+            }, true);//hutool的toBean方法把json转成一个泛型类 true忽略转化不了的数据
+        }
+
+//        return Result.success(fileMapper.selectList(null));
+        return Result.success(files);
+   }
 //
-//}
+    }

@@ -8,7 +8,7 @@ import lombok.Data;
  * @BelongsProject: IntelliJ IDEA
  * @BelongsPackage: com.atdecap.springbootbackstage.entity
  * @create 2022-05-2022/5/2621:51
- * @desc
+ * @desc 选图标的
  **/
 @TableName("dict")
 @Data
