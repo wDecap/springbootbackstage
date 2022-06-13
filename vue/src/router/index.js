@@ -22,11 +22,7 @@ const routes = [
         name: '404',
         component: () => import('../views/404.vue')
     },
-    {
-        path: '/index',
-        name: 'index',
-        component: () => import('../views/Home.vue')
-    },
+
     {
         path: '/front',
         name: 'Front',

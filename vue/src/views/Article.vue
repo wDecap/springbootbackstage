@@ -1,21 +1,54 @@
 <template>
-  <div style="color: #666">
+  <div>
     <div style="margin: 10px 0">
-      <el-input size="small" style="width: 300px" placeholder="请输入名称" suffix-icon="el-icon-search" v-model="name"></el-input>
-      <el-button class="ml-5" type="primary" @click="load" size="small">搜索</el-button>
-      <el-button type="warning" @click="reset" size="small">重置</el-button>
+      <el-input style="width: 200px" placeholder="请输入名称" suffix-icon="el-icon-search" v-model="name"></el-input>
+      <el-button class="ml-5" type="primary" @click="load">搜索</el-button>
+      <el-button type="warning" @click="reset">重置</el-button>
     </div>
-
     <div style="margin: 10px 0">
-      <div style="padding: 10px 0; border-bottom: 1px dashed #ccc" v-for="item in tableData" :key="item.id">
-        <div class="pd-10" style="font-size: 20px; color: #3F5EFB; cursor: pointer" @click="$router.push('/front/articleDetail?id=' + item.id)">{{ item.name }}</div>
-        <div style="font-size: 14px; margin-top: 10px">
-          <i class="el-icon-user-solid"></i> <span>{{ item.user }}</span>
-          <i class="el-icon-time" style="margin-left: 10px"></i> <span>{{ item.time }}</span>
-        </div>
-      </div>
-    </div>
+      <el-button type="primary" @click="handleAdd" v-if="user.role === 'ROLE_ADMIN'">新增 <i class="el-icon-circle-plus-outline"></i></el-button>
+      <el-popconfirm
+          class="ml-5"
+          confirm-button-text='确定'
+          cancel-button-text='我再想想'
+          icon="el-icon-info"
+          icon-color="red"
+          title="您确定批量删除这些数据吗？"
+          @confirm="delBatch"
+      >
+        <el-button type="danger" slot="reference">批量删除 <i class="el-icon-remove-outline"></i></el-button>
+      </el-popconfirm>
 
+    </div>
+    <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"
+              @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55"></el-table-column>
+      <el-table-column prop="id" label="ID" width="80"></el-table-column>
+      <el-table-column prop="name" label="文章标题"></el-table-column>
+      <el-table-column prop="content" label="文章内容">
+        <template slot-scope="scope">
+          <el-button @click="view(scope.row.content)" type="primary">查看内容</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column prop="user" label="发布人"></el-table-column>
+      <el-table-column prop="time" label="发布时间"></el-table-column>
+      <el-table-column label="操作" width="280" align="center">
+        <template slot-scope="scope">
+          <el-button type="success" @click="handleEdit(scope.row)" v-if="user.role === 'ROLE_ADMIN'">编辑 <i class="el-icon-edit"></i></el-button>
+          <el-popconfirm
+              class="ml-5"
+              confirm-button-text='确定'
+              cancel-button-text='我再想想'
+              icon="el-icon-info"
+              icon-color="red"
+              title="您确定删除吗？"
+              @confirm="del(scope.row.id)"
+          >
+            <el-button type="danger" slot="reference" v-if="user.role === 'ROLE_ADMIN'">删除 <i class="el-icon-remove-outline"></i></el-button>
+          </el-popconfirm>
+        </template>
+      </el-table-column>
+    </el-table>
 
     <div style="padding: 10px 0">
       <el-pagination
@@ -24,10 +57,43 @@
           :current-page="pageNum"
           :page-sizes="[2, 5, 10, 20]"
           :page-size="pageSize"
-          layout="total, prev, pager, next"
+          layout="total, sizes, prev, pager, next, jumper"
           :total="total">
       </el-pagination>
     </div>
+
+    <el-dialog title="文章信息" :visible.sync="dialogFormVisible" width="60%" >
+      <el-form label-width="80px" size="small">
+        <el-form-item label="文章标题">
+          <el-input v-model="form.name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="文章内容">
+          <mavon-editor ref="md" v-model="form.content" :ishljs="true" @imgAdd="imgAdd"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="save">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="文章信息" :visible.sync="viewDialogVis" width="60%" >
+      <el-card>
+        <div>
+          <mavon-editor
+              class="md"
+              :value="content"
+              :subfield="false"
+              :defaultOpen="'preview'"
+              :toolbarsFlag="false"
+              :editable="false"
+              :scrollStyle="true"
+              :ishljs="true"
+          />
+        </div>
+      </el-card>
+    </el-dialog>
+
   </div>
 </template>
 

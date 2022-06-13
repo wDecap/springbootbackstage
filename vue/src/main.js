@@ -8,6 +8,12 @@ import './assets/gloable.css'
 import request from "@/utils/request";
 Vue.config.productionTip = false
 
+// main.js全局注册
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+// use
+Vue.use(mavonEditor)
+
 Vue.use(ElementUI,{size:"mini"});
 
 Vue.prototype.request=request //设置axios的全局request

@@ -4,7 +4,7 @@
 
 ### 主页
 
-![](https://fastly.jsdelivr.net/gh/AXDecap/imagehost/img/20220608111302.png)
+![](https://fastly.jsdelivr.net/gh/AXDecap/imagehost/img/20220610204036.png)
 
 ### 数据报表
 
@@ -52,3 +52,16 @@
 **临近期末 学业繁忙**
 
 **环境部署配置教程有时间补上**
+
+简单提下环境部署 
+
+- 下载nodejs**装脚手架vuecli2**别装成vue3cli了 2.6.14注意版本一定要和我一样 ，不然版本不兼容造成的报错别在issues里提问！
+  再继续装
+  element-ui 2.15.6
+  </br>axios 0.27.2
+  </br>vue-router 3.5.1
+  </br>vuex 3.6.2
+  </br>idea插件还要下lombok
+  </br>注意：springboot版本不要太高，swagger测试接口有，2.6版本要在yaml文件加上</br>matching-strategy的配置。不想麻烦可以和我一样2.5.5版本。新发布的swagger测试url有变化，具体看我代码里的注解，或者问百度
+  </br>......
+  </br>总之缺什么就补什么

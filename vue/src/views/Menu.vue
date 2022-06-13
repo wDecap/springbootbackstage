@@ -101,7 +101,7 @@
         name: "Menu",
         data(){
             return{
-                serverIp: serverIp,
+                // serverIp: serverIp,
                 tableData: [],
                 total: 0,
                 pageNum: 1,
@@ -142,7 +142,8 @@
                 })
             },
             save(){
-                this.request.post("/menu/",this.form).then( res =>{
+              console.log(this.form)
+              this.request.post("/menu",this.form).then( res =>{
                     if (res.code === '200'){
                         this.$message.success("保存成功")
                         this.dialogFormVisible = false
@@ -188,9 +189,11 @@
             handleAdd(pid) {
                 this.dialogFormVisible = true
                 this.form = {}
-                if (pid) {
-                    this.form.pid = pid
-                }
+              //   if (pid) {
+              //       this.form.pid = pid
+              //   }else {
+              //     this.form.pid =null
+              // }
             },
             handleSizeChange(pageSize){
                 console.log(pageSize)

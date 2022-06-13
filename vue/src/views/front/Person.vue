@@ -3,7 +3,7 @@
     <el-form label-width="80px" size="small">
       <el-upload
           class="avatar-uploader"
-          :action="'http://' + serverIp +':9090/file/upload'"
+          :action="'http://' + serverIp +':8888/file/upload'"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
       >
