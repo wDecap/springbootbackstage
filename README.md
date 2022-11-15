@@ -38,30 +38,131 @@
 
 ![](https://fastly.jsdelivr.net/gh/AXDecap/imagehost/img/20220610195620.png)
 
+## 打jar包
+
+```shell
+mvn clean package -DskipTests
+```
+
+参数说明：-DskipTests 不测试
 
 
-**可以拿去当毕业设计**
 
-**git clone** **远程地址**
+### 测试运行jar包
 
-因为GitHub被墙用https不一定能百分百成功可以多试几次或者“科学上网” ，这里我建议用ssh； 用ssh之前要 先设置个密钥才能使用ssh 不会去问百度
+```shell
+java -jar ./springbootbackstage-0.0.1-SNAPSHOT.jar
+```
 
-- https：git clone https://github.com/AXDecap/springbootbackstage.git
-- ssh：git clone git@github.com:AXDecap/springbootbackstage.git 
 
-**临近期末 学业繁忙**
 
-**环境部署配置教程有时间补上**
+### 创建目录:
 
-简单提下环境部署 
+```shell
+mkdir -p /home/server/springbootbackstage
+```
 
-- 下载nodejs**装脚手架vuecli2**别装成vue3cli了 2.6.14注意版本一定要和我一样 ，不然版本不兼容造成的报错别在issues里提问！
-  再继续装
-  element-ui 2.15.6
-  </br>axios 0.27.2
-  </br>vue-router 3.5.1
-  </br>vuex 3.6.2
-  </br>idea插件还要下lombok
-  </br>注意：springboot版本不要太高，swagger测试接口有，2.6版本要在yaml文件加上</br>matching-strategy的配置。不想麻烦可以和我一样2.5.5版本。新发布的swagger测试url有变化，具体看我代码里的注解，或者问百度
-  </br>......
-  </br>总之缺什么就补什么
+将jar包放在/home/server/springbootbackstage
+
+
+
+### 后台启动
+
+```shell
+cd /home/server/springbootbackstage
+nohup java -jar ./springbootbackstage-0.0.1-SNAPSHOT.jar &
+```
+
+
+
+### 查看日志
+
+```
+tail -500f nohup.out
+```
+
+
+
+### 相关进程
+
+```
+查看java进程
+ps -ef | grep java
+
+杀死进程
+kill -9 进程号
+
+
+```
+
+
+
+## vue打包
+
+```
+cd vue
+npm run build
+```
+
+dist包
+
+
+
+### 安装anywhere
+
+前端静态资源服务器插件
+
+```
+npm install anywhere -g
+```
+
+
+
+### 在dist包下
+
+```shell
+anywhere -p 8080
+```
+
+
+
+### 配置nginx.conf
+
+```
+vim /usr/local/webserver/nginx/conf/nginx.conf
+
+改写以下内容
+server
+  {
+    listen 8089;#监听端口 
+    server_name localhost;#域名
+      location / {
+    root /home/server/dist;  
+    index index.html index.htm;
+    try_files $uri $uri/ /index.html; #解决history路由模式刷新404问题
+    }
+ }
+
+```
+
+
+
+
+
+### nginx重启
+
+```
+/usr/local/webserver/nginx/sbin/nginx -s reload  
+```
+
+
+
+前端文件上传和导出的url需要配置**serverIp**
+
+
+
+文件上传、下载和导出需要使用服务器公网IP
+
+接口请求也需要使用公网IP
+
+
